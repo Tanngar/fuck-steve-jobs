@@ -1,8 +1,7 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
@@ -10,10 +9,9 @@ import {
   setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { camera, images, square, triangle } from 'ionicons/icons';
+import { camera } from 'ionicons/icons';
 import FeedTab from './pages/FeedTab';
-import FileTab from './pages/FileTab';
-import { MdViewDay, MdFolderOpen } from 'react-icons/md';
+import { MdFolderOpen, MdGridView } from 'react-icons/md';
 import './App.css';
 
 /* Core CSS required for Ionic components to work properly */
@@ -34,15 +32,13 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { usePhotoGallery } from './hooks/usePhotoGallery';
 import GridTab from './pages/GridTab';
-import PostTab from './pages/PostTab';
+import AddPostTab from './pages/AddPostTab';
+import UpdatePostTab from './pages/UpdatePostTab';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { photos, takePhoto, deletePhoto } = usePhotoGallery();
-
   return (
     <IonApp>
       <IonReactRouter>
@@ -54,25 +50,25 @@ const App: React.FC = () => {
             <Route exact path='/GridTab'>
               <GridTab />
             </Route>
-            <Route path='/FileTab'>
-              <FileTab />
+            <Route exact path='/AddPostTab'>
+              <AddPostTab />
             </Route>
-            <Route exact path='/PostTab/:id'>
-              <PostTab />
+            <Route exact path='/UpdatePostTab/:id'>
+              <UpdatePostTab />
+            </Route>
+            <Route exact path='/'>
+              <FeedTab />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot='bottom'>
-            <IonTabButton tab='tab1' href='/FeedTab'>
+            <IonTabButton tab='feed-tab' href='/FeedTab'>
               {/* Put home icon here */}
               <MdFolderOpen />
             </IonTabButton>
-            <IonTabButton tab='tab2' href='/GridTab'>
-              <MdViewDay />
+            <IonTabButton tab='grid-tab' href='/GridTab'>
+              <MdGridView />
             </IonTabButton>
-            <IonTabButton tab='tab3' href='/FileTab'>
-              <MdFolderOpen />
-            </IonTabButton>
-            <IonTabButton tab='tab4' onClick={() => takePhoto()}>
+            <IonTabButton tab='camera-tab' href='/AddPostTab'>
               <IonIcon icon={camera}></IonIcon>
             </IonTabButton>
           </IonTabBar>
